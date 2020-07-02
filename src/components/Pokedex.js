@@ -27,6 +27,13 @@ class Pokedex extends Component {
     })
   }
 
+  getPokemon = pokemonId => {
+    const { navigation } = this.props
+    navigation.navigate('Pokemon', {
+      pokemonId
+    })
+  }
+
   render() {
     const { pokemonInfos } = this.state
     return (
@@ -34,7 +41,7 @@ class Pokedex extends Component {
         <ScrollView contentContainerStyle={styles.gridContainer}>
           {
             pokemonInfos.map((pokemon, i) => (
-              <TouchableHighlight key={i} onPress={this.getPokemon}>
+              <TouchableHighlight key={i} onPress={() => this.getPokemon(pokemon.id)}>
                 <View style={styles.card}>
                   <Text style={styles.name}>
                     {pokemon.name}

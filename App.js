@@ -3,7 +3,7 @@ import { StatusBar, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Pokedex from './src/components/Pokedex'
+import PokedexHome from './src/components/PokedexHome'
 import Sac from './src/components/Sac'
 
 const Tab = createBottomTabNavigator()
@@ -18,7 +18,7 @@ class App extends Component {
               tabBarIcon: ({ focused, size }) => {
                 let iconName
                 let color
-                if (route.name === 'Pokedex') {
+                if (route.name === 'PokedexHome') {
                   iconName = focused
                     ? 'book'
                     : 'book'
@@ -44,7 +44,7 @@ class App extends Component {
               }
             }}
           >
-            <Tab.Screen name='Pokedex' component={Pokedex} />
+            <Tab.Screen name='PokedexHome' component={PokedexHome} />
             <Tab.Screen name='Sac' component={Sac} />
           </Tab.Navigator>
         </NavigationContainer>

@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import axios from 'axios'
 
 class Pokemon extends Component {
 
   state = {
     abilities: [],
-    stats: []
+    stats: [],
+    infos: null
   }
 
   componentDidMount() {
-    this.getAbilities()
+    this.getDetails()
   }
 
   getAbilities = () => {
-    const { infos } = this.props
+    const { infos } = this.state
     let listOfAbilities = []
     let listOfStats = []
     listOfAbilities.push(infos.abilities.map(ab => ab.ability.name))
@@ -24,9 +26,21 @@ class Pokemon extends Component {
     })
   }
 
+  getDetails = () => {
+    const { route } = this.props
+    const { pokemonId } = route.params
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+      .then(res => this.setState({ infos: res.data }, this.getAbilities))
+  }
+
   render() {
-    const { infos } = this.props
-    const { abilities, stats } = this.state
+    const { route } = this.props
+    const { pokemonId } = route.params
+    const { abilities, stats, infos } = this.state
+    if (!infos) {
+      return <View><Text>loading {pokemonId}</Text></View>
+    }
     return (
       <View>
         <Text style={styles.name}>{infos.name}</Text>
