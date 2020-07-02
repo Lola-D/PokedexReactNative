@@ -1,21 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
+import { StatusBar, View } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { NavigationContainer } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Pokedex from './src/components/Pokedex'
+import Sac from './src/components/Sac'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const Tab = createBottomTabNavigator()
+class App extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <StatusBar hidden={true} />
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, size }) => {
+                let iconName
+                let color
+                if (route.name === 'Pokedex') {
+                  iconName = focused
+                    ? 'book'
+                    : 'book'
+                  color = focused
+                    ? '#fae007'
+                    : '#aaa9a4'
+                } else if (route.name === 'Sac') {
+                  iconName = focused
+                    ? 'shopping-bag'
+                    : 'shopping-bag'
+                  color = focused
+                    ? '#fae007'
+                    : '#aaa9a4'
+                }
+                return <Icon name={iconName} size={size} color={color} />
+              }
+            })}
+            tabBarOptions={{
+              showIcon: true,
+              showLabel: true,
+              style: {
+                backgroundColor: '#f4502d',
+              }
+            }}
+          >
+            <Tab.Screen name='Pokedex' component={Pokedex} />
+            <Tab.Screen name='Sac' component={Sac} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </View>
+    )
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
